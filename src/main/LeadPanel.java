@@ -16,10 +16,16 @@ package main;
  * @author sandro
  */
 public class LeadPanel extends javax.swing.JPanel {
+    private Client client;
 
     /** Creates new form LeadPanel */
     public LeadPanel() {
         initComponents();
+    }
+
+    LeadPanel(Client c) {
+        this();
+        this.client = c;
     }
 
     /** This method is called from within the constructor to

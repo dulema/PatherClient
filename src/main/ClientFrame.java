@@ -12,25 +12,45 @@
 package main;
 
 import java.awt.CardLayout;
+import javax.swing.SwingUtilities;
+import main.daemon.Command;
+import main.daemon.CommandListener;
+import main.sphinx.SphinxCommandThread;
+import main.tts.TextToSpeach;
 
 /**
  *
  * @author Sandro Badame <a href="mailto:s.badame@gmail.com">s.badame&amp;gmail.com</a>
  */
-public class ClientFrame extends javax.swing.JFrame {
+public class ClientFrame extends javax.swing.JFrame implements CommandListener{
+
+    Client client;
+    SphinxCommandThread sphinxthread;
 
     CardLayout layout;
-    TestPanel testPanel = new TestPanel();
-    LeadPanel leadPanel = new LeadPanel();
-    LearnPanel learnPanel = new LearnPanel();
+    TestPanel testPanel;
+    LeadPanel leadPanel;
+    LearnPanel learnPanel;
 
     String testName = "test";
     String leadName = "lead";
     String learnName = "learn";
 
+    public ClientFrame(){
+        this(null);
+    }
+
     /** Creates new form ClientFrame */
-    public ClientFrame() {
+    public ClientFrame(Client c) {
+        this.client = c;
+        client.getDaemon().addListener(this);
+
         initComponents();
+
+        testPanel = new TestPanel(c);
+        leadPanel = new LeadPanel(c);
+        learnPanel = new LearnPanel(c);
+
         layout = (CardLayout) modePanel.getLayout();
         modePanel.add(testPanel, testName);
         modePanel.add(leadPanel,leadName );
@@ -50,20 +70,21 @@ public class ClientFrame extends javax.swing.JFrame {
 
         buttongroup = new javax.swing.ButtonGroup();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        infoArea = new javax.swing.JTextArea();
         testbutton = new javax.swing.JRadioButton();
         learnbutton = new javax.swing.JRadioButton();
         leadbutton = new javax.swing.JRadioButton();
         modePanel = new javax.swing.JPanel();
         voicerecognition = new javax.swing.JCheckBox();
+        tts = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("PatherBot");
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setEditable(false);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        infoArea.setColumns(20);
+        infoArea.setEditable(false);
+        infoArea.setRows(5);
+        jScrollPane1.setViewportView(infoArea);
 
         buttongroup.add(testbutton);
         testbutton.setSelected(true);
@@ -99,27 +120,31 @@ public class ClientFrame extends javax.swing.JFrame {
             }
         });
 
+        tts.setText("Use Vocal Acknowledgement");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 667, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(modePanel, javax.swing.GroupLayout.DEFAULT_SIZE, 679, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 667, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(testbutton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(learnbutton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(leadbutton)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 350, Short.MAX_VALUE)
+                                .addComponent(voicerecognition))))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(testbutton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(learnbutton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(leadbutton))
-                    .addComponent(modePanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 667, Short.MAX_VALUE))
+                        .addContainerGap(493, Short.MAX_VALUE)
+                        .addComponent(tts)))
                 .addContainerGap())
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                    .addContainerGap(520, Short.MAX_VALUE)
-                    .addComponent(voicerecognition)
-                    .addContainerGap()))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -128,17 +153,15 @@ public class ClientFrame extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(testbutton)
                     .addComponent(learnbutton)
-                    .addComponent(leadbutton))
+                    .addComponent(leadbutton)
+                    .addComponent(voicerecognition))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(modePanel, javax.swing.GroupLayout.DEFAULT_SIZE, 254, Short.MAX_VALUE)
+                .addComponent(tts)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(modePanel, javax.swing.GroupLayout.DEFAULT_SIZE, 219, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(voicerecognition)
-                    .addContainerGap(403, Short.MAX_VALUE)))
         );
 
         pack();
@@ -149,9 +172,20 @@ public class ClientFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_testbuttonActionPerformed
 
     private void voicerecognitionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_voicerecognitionActionPerformed
-        System.out.println("Voice recognition");
-        System.out.println(voicerecognition.isSelected());
-
+        if (voicerecognition.isSelected()) {
+            if (sphinxthread == null) {
+                sphinxthread = new SphinxCommandThread();
+                sphinxthread.start();
+            }else{
+                sphinxthread.resumeListening();
+            }
+        }else{
+            if (sphinxthread != null) {
+                sphinxthread.pauseListening();
+            }else{
+                System.err.println("Sphinx thread is null, but we're turning it off!");
+            }
+        }
     }//GEN-LAST:event_voicerecognitionActionPerformed
 
     private void learnbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_learnbuttonActionPerformed
@@ -161,6 +195,22 @@ public class ClientFrame extends javax.swing.JFrame {
     private void leadbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_leadbuttonActionPerformed
         layout.show(modePanel, leadName);
     }//GEN-LAST:event_leadbuttonActionPerformed
+
+    public void logInfo(String info){
+        infoArea.append(info + "\n" );
+    }
+    
+    public void commandSent(final Command c) {
+        SwingUtilities.invokeLater(new Runnable(){
+           public void run(){
+               if (tts.isSelected()) {
+                   TextToSpeach.speak(c.toString());
+               }
+               logInfo(c.toString());
+           }
+        });
+    }
+
 
     /**
     * @param args the command line arguments
@@ -176,13 +226,15 @@ public class ClientFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttongroup;
+    private javax.swing.JTextArea infoArea;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JRadioButton leadbutton;
     private javax.swing.JRadioButton learnbutton;
     private javax.swing.JPanel modePanel;
     private javax.swing.JRadioButton testbutton;
+    private javax.swing.JCheckBox tts;
     private javax.swing.JCheckBox voicerecognition;
     // End of variables declaration//GEN-END:variables
+
 
 }

@@ -11,14 +11,14 @@
             <properties/>
             <folders>
                 <source-folder>
-                    <label>src</label>
-                    <type>java</type>
-                    <location>src</location>
+                    <label>PatherClient</label>
+                    <location>.</location>
                     <encoding>UTF-8</encoding>
                 </source-folder>
                 <source-folder>
-                    <label>PatherClient</label>
-                    <location>.</location>
+                    <label>src</label>
+                    <type>java</type>
+                    <location>src</location>
                     <encoding>UTF-8</encoding>
                 </source-folder>
             </folders>
@@ -59,10 +59,12 @@
                     <ide-action name="run"/>
                 </context-menu>
             </view>
+            <subprojects/>
         </general-data>
         <java-data xmlns="http://www.netbeans.org/ns/freeform-project-java/1">
             <compilation-unit>
                 <package-root>src</package-root>
+                <classpath mode="compile">lib/jsapi-1.0-base.jar:lib/jsapi.jar:lib/sphinx4.jar:lib/WSJ_8gau_13dCep_16k_40mel_130Hz_6800Hz.jar</classpath>
                 <built-to>bin</built-to>
                 <source-level>1.5</source-level>
             </compilation-unit>

@@ -1,6 +1,7 @@
 package main;
 
 import javax.swing.JOptionPane;
+import main.daemon.Command;
 import main.daemon.Daemon;
 
 /**
@@ -9,11 +10,11 @@ import main.daemon.Daemon;
  */
 public class Client {
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        Daemon daemon;
+    private Daemon daemon;
+    private ClientFrame frame;
+
+    public Client(){
+
         try {
             //Just see if the daemon is already running
             daemon = new Daemon();
@@ -36,9 +37,27 @@ public class Client {
             }
         }
 
-        ClientFrame frame = new ClientFrame();
+        frame = new ClientFrame(this);
+    }
+
+    public void start(){
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
+    }
+
+    public Daemon getDaemon(){
+        return daemon;
+    }
+
+    public void sendCommand(Command c){
+        getDaemon().sendCommand(c);
+    }
+
+    /**
+     * @param args the command line arguments
+     */
+    public static void main(String[] args) {
+        new Client().start();
     }
 
 }

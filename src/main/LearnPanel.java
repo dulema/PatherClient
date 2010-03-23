@@ -17,9 +17,16 @@ package main;
  */
 public class LearnPanel extends javax.swing.JPanel {
 
+    Client client;
+
     /** Creates new form LearnPanel */
     public LearnPanel() {
         initComponents();
+    }
+
+    LearnPanel(Client c) {
+        this();
+        this.client = c;
     }
 
     /** This method is called from within the constructor to
