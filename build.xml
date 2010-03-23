@@ -21,11 +21,11 @@
 	</target>
 
 	<target name="run" depends="build">
-		<java classname="main.Client" classpath="build/" fork="true" classpathref="lib.path" />
+		<java classname="main.Client" classpath="build/" fork="true" classpathref="lib.path" maxmemory="256m" />
 	</target>
 	
 	<target name="sphinx-demo" depends="build">
-			<java classname="main.sphinx.HelloWorld" classpath="build/" fork="true" classpathref="lib.path" />
+			<java classname="main.sphinx.HelloWorld" classpath="build/" fork="true" classpathref="lib.path" maxmemory="256m" />
 	</target>
 
 </project>
