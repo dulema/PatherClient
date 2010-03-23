@@ -11,15 +11,32 @@
 
 package main;
 
+import java.awt.CardLayout;
+
 /**
  *
  * @author Sandro Badame <a href="mailto:s.badame@gmail.com">s.badame&amp;gmail.com</a>
  */
 public class ClientFrame extends javax.swing.JFrame {
 
+    CardLayout layout;
+    TestPanel testPanel = new TestPanel();
+    LeadPanel leadPanel = new LeadPanel();
+    LearnPanel learnPanel = new LearnPanel();
+
+    String testName = "test";
+    String leadName = "lead";
+    String learnName = "learn";
+
     /** Creates new form ClientFrame */
     public ClientFrame() {
         initComponents();
+        layout = (CardLayout) modePanel.getLayout();
+        modePanel.add(testPanel, testName);
+        modePanel.add(leadPanel,leadName );
+        modePanel.add(learnPanel, learnName);
+        modePanel.setLayout(layout);
+        layout.show(modePanel, testName);
     }
 
     /** This method is called from within the constructor to
@@ -35,15 +52,16 @@ public class ClientFrame extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTextArea1 = new javax.swing.JTextArea();
         testbutton = new javax.swing.JRadioButton();
-        teachbutton = new javax.swing.JRadioButton();
+        learnbutton = new javax.swing.JRadioButton();
         leadbutton = new javax.swing.JRadioButton();
         modePanel = new javax.swing.JPanel();
-        jCheckBox1 = new javax.swing.JCheckBox();
+        voicerecognition = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("PatherBot");
 
         jTextArea1.setColumns(20);
+        jTextArea1.setEditable(false);
         jTextArea1.setRows(5);
         jScrollPane1.setViewportView(jTextArea1);
 
@@ -56,27 +74,28 @@ public class ClientFrame extends javax.swing.JFrame {
             }
         });
 
-        buttongroup.add(teachbutton);
-        teachbutton.setText("Teach");
+        buttongroup.add(learnbutton);
+        learnbutton.setText("Learn");
+        learnbutton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                learnbuttonActionPerformed(evt);
+            }
+        });
 
         buttongroup.add(leadbutton);
         leadbutton.setText("Lead");
-
-        javax.swing.GroupLayout modePanelLayout = new javax.swing.GroupLayout(modePanel);
-        modePanel.setLayout(modePanelLayout);
-        modePanelLayout.setHorizontalGroup(
-            modePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 657, Short.MAX_VALUE)
-        );
-        modePanelLayout.setVerticalGroup(
-            modePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 250, Short.MAX_VALUE)
-        );
-
-        jCheckBox1.setText("Use Voice Recognition");
-        jCheckBox1.addActionListener(new java.awt.event.ActionListener() {
+        leadbutton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jCheckBox1ActionPerformed(evt);
+                leadbuttonActionPerformed(evt);
+            }
+        });
+
+        modePanel.setLayout(new java.awt.CardLayout());
+
+        voicerecognition.setText("Use Voice Recognition");
+        voicerecognition.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                voicerecognitionActionPerformed(evt);
             }
         });
 
@@ -87,19 +106,19 @@ public class ClientFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 657, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 667, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(testbutton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(teachbutton)
+                        .addComponent(learnbutton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(leadbutton))
-                    .addComponent(modePanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(modePanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 667, Short.MAX_VALUE))
                 .addContainerGap())
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                     .addContainerGap(520, Short.MAX_VALUE)
-                    .addComponent(jCheckBox1)
+                    .addComponent(voicerecognition)
                     .addContainerGap()))
         );
         layout.setVerticalGroup(
@@ -108,17 +127,17 @@ public class ClientFrame extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(testbutton)
-                    .addComponent(teachbutton)
+                    .addComponent(learnbutton)
                     .addComponent(leadbutton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(modePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(modePanel, javax.swing.GroupLayout.DEFAULT_SIZE, 254, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addContainerGap()
-                    .addComponent(jCheckBox1)
+                    .addComponent(voicerecognition)
                     .addContainerGap(403, Short.MAX_VALUE)))
         );
 
@@ -126,12 +145,22 @@ public class ClientFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void testbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_testbuttonActionPerformed
-        // TODO add your handling code here:
+        layout.show(modePanel, testName);
     }//GEN-LAST:event_testbuttonActionPerformed
 
-    private void jCheckBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jCheckBox1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jCheckBox1ActionPerformed
+    private void voicerecognitionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_voicerecognitionActionPerformed
+        System.out.println("Voice recognition");
+        System.out.println(voicerecognition.isSelected());
+
+    }//GEN-LAST:event_voicerecognitionActionPerformed
+
+    private void learnbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_learnbuttonActionPerformed
+        layout.show(modePanel, learnName);
+    }//GEN-LAST:event_learnbuttonActionPerformed
+
+    private void leadbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_leadbuttonActionPerformed
+        layout.show(modePanel, leadName);
+    }//GEN-LAST:event_leadbuttonActionPerformed
 
     /**
     * @param args the command line arguments
@@ -147,13 +176,13 @@ public class ClientFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup buttongroup;
-    private javax.swing.JCheckBox jCheckBox1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTextArea jTextArea1;
     private javax.swing.JRadioButton leadbutton;
+    private javax.swing.JRadioButton learnbutton;
     private javax.swing.JPanel modePanel;
-    private javax.swing.JRadioButton teachbutton;
     private javax.swing.JRadioButton testbutton;
+    private javax.swing.JCheckBox voicerecognition;
     // End of variables declaration//GEN-END:variables
 
 }

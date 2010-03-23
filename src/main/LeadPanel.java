@@ -4,21 +4,21 @@
  */
 
 /*
- * LearnPanel.java
+ * LeadPanel.java
  *
- * Created on Mar 22, 2010, 10:50:06 PM
+ * Created on Mar 23, 2010, 12:18:54 PM
  */
 
 package main;
 
 /**
  *
- * @author Sandro Badame <a href="mailto:s.badame@gmail.com">s.badame&amp;gmail.com</a>
+ * @author sandro
  */
-public class LearnPanel extends javax.swing.JPanel {
+public class LeadPanel extends javax.swing.JPanel {
 
-    /** Creates new form LearnPanel */
-    public LearnPanel() {
+    /** Creates new form LeadPanel */
+    public LeadPanel() {
         initComponents();
     }
 
@@ -33,7 +33,7 @@ public class LearnPanel extends javax.swing.JPanel {
 
         jLabel1 = new javax.swing.JLabel();
 
-        jLabel1.setText("Learning Mode");
+        jLabel1.setText("Lead Mode");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -42,9 +42,9 @@ public class LearnPanel extends javax.swing.JPanel {
             .addGap(0, 400, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 154, Short.MAX_VALUE)
+                    .addGap(0, 166, Short.MAX_VALUE)
                     .addComponent(jLabel1)
-                    .addGap(0, 154, Short.MAX_VALUE)))
+                    .addGap(0, 167, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

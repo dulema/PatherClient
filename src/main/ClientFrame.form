@@ -30,22 +30,22 @@
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="jScrollPane1" alignment="0" pref="657" max="32767" attributes="0"/>
+                  <Component id="jScrollPane1" alignment="0" pref="667" max="32767" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="testbutton" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="teachbutton" min="-2" max="-2" attributes="0"/>
+                      <Component id="learnbutton" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="leadbutton" min="-2" max="-2" attributes="0"/>
                   </Group>
-                  <Component id="modePanel" alignment="1" max="32767" attributes="0"/>
+                  <Component id="modePanel" alignment="1" pref="667" max="32767" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
           <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
               <Group type="102" alignment="1" attributes="0">
                   <EmptySpace pref="520" max="32767" attributes="0"/>
-                  <Component id="jCheckBox1" min="-2" max="-2" attributes="0"/>
+                  <Component id="voicerecognition" min="-2" max="-2" attributes="0"/>
                   <EmptySpace max="-2" attributes="0"/>
               </Group>
           </Group>
@@ -57,11 +57,11 @@
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="testbutton" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="teachbutton" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="learnbutton" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="leadbutton" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="modePanel" max="32767" attributes="0"/>
+              <Component id="modePanel" pref="254" max="32767" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="jScrollPane1" min="-2" pref="129" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
@@ -69,7 +69,7 @@
           <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
               <Group type="102" alignment="0" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Component id="jCheckBox1" min="-2" max="-2" attributes="0"/>
+                  <Component id="voicerecognition" min="-2" max="-2" attributes="0"/>
                   <EmptySpace pref="403" max="32767" attributes="0"/>
               </Group>
           </Group>
@@ -87,6 +87,7 @@
         <Component class="javax.swing.JTextArea" name="jTextArea1">
           <Properties>
             <Property name="columns" type="int" value="20"/>
+            <Property name="editable" type="boolean" value="false"/>
             <Property name="rows" type="int" value="5"/>
           </Properties>
         </Component>
@@ -104,13 +105,16 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="testbuttonActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JRadioButton" name="teachbutton">
+    <Component class="javax.swing.JRadioButton" name="learnbutton">
       <Properties>
         <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
           <ComponentRef name="buttongroup"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="Teach"/>
+        <Property name="text" type="java.lang.String" value="Learn"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="learnbuttonActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JRadioButton" name="leadbutton">
       <Properties>
@@ -119,28 +123,20 @@
         </Property>
         <Property name="text" type="java.lang.String" value="Lead"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="leadbuttonActionPerformed"/>
+      </Events>
     </Component>
     <Container class="javax.swing.JPanel" name="modePanel">
 
-      <Layout>
-        <DimensionLayout dim="0">
-          <Group type="103" groupAlignment="0" attributes="0">
-              <EmptySpace min="0" pref="657" max="32767" attributes="0"/>
-          </Group>
-        </DimensionLayout>
-        <DimensionLayout dim="1">
-          <Group type="103" groupAlignment="0" attributes="0">
-              <EmptySpace min="0" pref="250" max="32767" attributes="0"/>
-          </Group>
-        </DimensionLayout>
-      </Layout>
+      <Layout class="org.netbeans.modules.form.compat2.layouts.DesignCardLayout"/>
     </Container>
-    <Component class="javax.swing.JCheckBox" name="jCheckBox1">
+    <Component class="javax.swing.JCheckBox" name="voicerecognition">
       <Properties>
         <Property name="text" type="java.lang.String" value="Use Voice Recognition"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jCheckBox1ActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="voicerecognitionActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>
