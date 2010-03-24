@@ -174,7 +174,12 @@ public class ClientFrame extends javax.swing.JFrame implements CommandListener{
     private void voicerecognitionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_voicerecognitionActionPerformed
         if (voicerecognition.isSelected()) {
             if (sphinxthread == null) {
-                sphinxthread = new SphinxCommandThread();
+                sphinxthread = new SphinxCommandThread(){
+                    @Override
+                    public void wordDetected(String word){
+                         ClientFrame.this.sphinxWordDetected(word);
+                    }
+                };
                 sphinxthread.start();
             }else{
                 sphinxthread.resumeListening();
@@ -187,6 +192,13 @@ public class ClientFrame extends javax.swing.JFrame implements CommandListener{
             }
         }
     }//GEN-LAST:event_voicerecognitionActionPerformed
+
+    private void sphinxWordDetected(String word) {
+        if (testbutton.isSelected()) {
+            testPanel.sphinxWordDetected(word);
+        }
+    }
+
 
     private void learnbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_learnbuttonActionPerformed
         layout.show(modePanel, learnName);
@@ -210,7 +222,6 @@ public class ClientFrame extends javax.swing.JFrame implements CommandListener{
            }
         });
     }
-
 
     /**
     * @param args the command line arguments

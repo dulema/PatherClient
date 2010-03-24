@@ -59,6 +59,6 @@ public class SphinxCommandThread extends Thread{
     }
 
     protected void wordDetected(String word){
-
+        System.out.println("hi");
     }
 }

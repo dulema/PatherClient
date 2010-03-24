@@ -220,4 +220,24 @@ public class TestPanel extends javax.swing.JPanel {
     private javax.swing.JButton west;
     // End of variables declaration//GEN-END:variables
 
+    void sphinxWordDetected(String word) {
+        if (word.toLowerCase().equals("forward")) {
+            forwardActionPerformed(null);
+        }else if (word.toLowerCase().equals("reverse")) {
+            reverseActionPerformed(null);
+        }else if (word.toLowerCase().equals("east")){
+            eastActionPerformed(null);
+        }else if (word.toLowerCase().equals("west")){
+            westActionPerformed(null);
+        }else if (word.toLowerCase().equals("north")){
+            northActionPerformed(null);
+        }else if (word.toLowerCase().equals("south")){
+            southActionPerformed(null);
+        }else if (word.toLowerCase().equals("stop")){
+            stopActionPerformed(null);
+        }else{
+            System.err.println("Nothing to do here: " + word);
+        }
+    }
+
 }
