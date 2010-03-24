@@ -1,5 +1,8 @@
 package main.sphinx;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 public class SphinxCommandThread extends Thread{
 
     Sphinx sphinx;
@@ -21,13 +24,19 @@ public class SphinxCommandThread extends Thread{
             final String word = sphinx.listen();
             if (pause || word == null || word.isEmpty())
                 continue;
-            else
+            else{
                 new Thread(){
                     @Override
                     public void run(){
                         wordDetected(word);
                     }
                 }.start();
+                try {
+                    Thread.sleep(3 * 1000);
+                } catch (InterruptedException ex) {
+                    System.err.println("Can't wait");
+                }
+            }
         }
     }
 
