@@ -16,7 +16,7 @@ import javax.swing.SwingUtilities;
 import main.daemon.Command;
 import main.daemon.CommandListener;
 import main.sphinx.SphinxCommandThread;
-import main.tts.TextToSpeach;
+import main.tts.TextToSpeech;
 
 /**
  *
@@ -216,7 +216,7 @@ public class ClientFrame extends javax.swing.JFrame implements CommandListener{
         SwingUtilities.invokeLater(new Runnable(){
            public void run(){
                if (tts.isSelected()) {
-                   TextToSpeach.speak(c.toString());
+                   TextToSpeech.speak(c.toString());
                }
                logInfo(c.toString());
            }

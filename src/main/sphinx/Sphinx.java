@@ -16,6 +16,7 @@ public class Sphinx {
 
 	Recognizer recognizer;
 	boolean micworks = true;
+	
 	public Sphinx(){
         System.out.println("Do work0.");
         ConfigurationManager cm;
