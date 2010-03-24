@@ -28,7 +28,6 @@ public class Sphinx {
         if (!microphone.startRecording()) {
             recognizer.deallocate();
             micworks = false;
-            //deactivate voice recog mode here
         }
         System.out.println("Do work.");
 	}
