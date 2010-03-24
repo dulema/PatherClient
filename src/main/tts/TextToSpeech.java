@@ -6,9 +6,9 @@ public class TextToSpeech {
 
     public static void speak(String s){
         try {
-			Runtime.getRuntime().exec("espeak --stdout \"" + s + "\" | aplay");
+            String[] command = {"/bin/sh", "-c", "espeak --stdout \""+ s +"\"| aplay"};
+			Process p = Runtime.getRuntime().exec(command);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
     }

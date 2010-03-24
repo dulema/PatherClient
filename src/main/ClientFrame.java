@@ -213,14 +213,15 @@ public class ClientFrame extends javax.swing.JFrame implements CommandListener{
     }
     
     public void commandSent(final Command c) {
-        SwingUtilities.invokeLater(new Runnable(){
-           public void run(){
-               if (tts.isSelected()) {
-                   TextToSpeech.speak(c.toString());
+        logInfo(c.toString());
+        if (tts.isSelected()) {
+            new Thread(){
+                @Override
+               public void run(){
+                  TextToSpeech.speak(c.toString());
                }
-               logInfo(c.toString());
-           }
-        });
+            }.start();
+        }
     }
 
     /**
