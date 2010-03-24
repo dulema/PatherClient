@@ -12,12 +12,9 @@
 package main;
 
 import java.awt.CardLayout;
-import javax.swing.JFrame;
-import javax.swing.SwingUtilities;
 import main.daemon.Command;
 import main.daemon.CommandListener;
 import main.sphinx.SphinxCommandThread;
-import main.sphinx.SphinxProgress;
 import main.tts.TextToSpeech;
 
 /**
