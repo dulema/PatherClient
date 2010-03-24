@@ -18,7 +18,6 @@ public class Sphinx {
 	boolean micworks = true;
 	
 	public Sphinx(){
-        System.out.println("Do work0.");
         ConfigurationManager cm;
         cm = new ConfigurationManager(Sphinx.class.getResource("helloworld.config.xml"));
 
@@ -30,7 +29,6 @@ public class Sphinx {
             recognizer.deallocate();
             micworks = false;
         }
-        System.out.println("Do work.");
 	}
 	
 	public String listen(){

@@ -18,18 +18,8 @@ public class SphinxCommandThread extends Thread{
     @Override
     public void run(){
         while(run){
-            if (pause){
-                synchronized(lock){
-                    try {
-                        lock.wait();
-                    } catch (InterruptedException ex) {
-                        System.err.println("Couldn't wait in Sphinx Thread!");
-                    }
-                }
-            }
-
             final String word = sphinx.listen();
-            if (word == null || word.isEmpty())
+            if (pause || word == null || word.isEmpty())
                 continue;
             else
                 new Thread(){
@@ -59,6 +49,5 @@ public class SphinxCommandThread extends Thread{
     }
 
     protected void wordDetected(String word){
-        System.out.println("hi");
     }
 }

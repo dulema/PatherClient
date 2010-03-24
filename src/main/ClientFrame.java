@@ -12,10 +12,12 @@
 package main;
 
 import java.awt.CardLayout;
+import javax.swing.JFrame;
 import javax.swing.SwingUtilities;
 import main.daemon.Command;
 import main.daemon.CommandListener;
 import main.sphinx.SphinxCommandThread;
+import main.sphinx.SphinxProgress;
 import main.tts.TextToSpeech;
 
 /**
@@ -172,25 +174,33 @@ public class ClientFrame extends javax.swing.JFrame implements CommandListener{
     }//GEN-LAST:event_testbuttonActionPerformed
 
     private void voicerecognitionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_voicerecognitionActionPerformed
-        if (voicerecognition.isSelected()) {
-            if (sphinxthread == null) {
-                sphinxthread = new SphinxCommandThread(){
-                    @Override
-                    public void wordDetected(String word){
-                         ClientFrame.this.sphinxWordDetected(word);
+        final String good = "Use Voice Recognition";
+        voicerecognition.setText(good + " Loading...");
+        new Thread(){
+            @Override
+            public void run(){
+                if (voicerecognition.isSelected()) {
+                    if (sphinxthread == null) {
+                        sphinxthread = new SphinxCommandThread(){
+                            @Override
+                            public void wordDetected(String word){
+                                 ClientFrame.this.sphinxWordDetected(word);
+                            }
+                        };
+                        sphinxthread.start();
+                        voicerecognition.setText(good);
+                    }else{
+                        sphinxthread.resumeListening();
                     }
-                };
-                sphinxthread.start();
-            }else{
-                sphinxthread.resumeListening();
+                }else{
+                    if (sphinxthread != null) {
+                        sphinxthread.pauseListening();
+                    }else{
+                        System.err.println("Sphinx thread is null, but we're turning it off!");
+                    }
+                }
             }
-        }else{
-            if (sphinxthread != null) {
-                sphinxthread.pauseListening();
-            }else{
-                System.err.println("Sphinx thread is null, but we're turning it off!");
-            }
-        }
+        }.start();
     }//GEN-LAST:event_voicerecognitionActionPerformed
 
     private void sphinxWordDetected(String word) {
