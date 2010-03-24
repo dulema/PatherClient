@@ -172,12 +172,12 @@ public class ClientFrame extends javax.swing.JFrame implements CommandListener{
 
     private void voicerecognitionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_voicerecognitionActionPerformed
         final String good = "Use Voice Recognition";
-        voicerecognition.setText(good + " Loading...");
         new Thread(){
             @Override
             public void run(){
                 if (voicerecognition.isSelected()) {
                     if (sphinxthread == null) {
+                        voicerecognition.setText(good + " Loading...");
                         sphinxthread = new SphinxCommandThread(){
                             @Override
                             public void wordDetected(String word){
