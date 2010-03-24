@@ -217,6 +217,7 @@ public class ClientFrame extends javax.swing.JFrame implements CommandListener{
 
     public void logInfo(String info){
         infoArea.append(info + "\n" );
+        infoArea.setCaretPosition(infoArea.getDocument().getLength());
     }
     
     public void commandSent(final Command c) {
