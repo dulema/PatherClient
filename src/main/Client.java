@@ -16,7 +16,6 @@ public class Client {
     private ClientFrame frame;
 
     public Client(){
-
         try {
             //Just see if the daemon is already running
             daemon = new Daemon();

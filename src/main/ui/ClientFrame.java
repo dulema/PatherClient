@@ -28,13 +28,11 @@ public class ClientFrame extends javax.swing.JFrame implements CommandListener{
     SphinxCommandThread sphinxthread;
 
     CardLayout layout;
-    TestPanel testPanel;
+    LearnPanel testPanel;
     LeadPanel leadPanel;
-    LearnPanel learnPanel;
 
-    String testName = "test";
-    String leadName = "lead";
     String learnName = "learn";
+    String leadName = "lead";
 
     public ClientFrame(){
         this(null);
@@ -47,16 +45,14 @@ public class ClientFrame extends javax.swing.JFrame implements CommandListener{
 
         initComponents();
 
-        testPanel = new TestPanel(c);
+        testPanel = new LearnPanel(c);
         leadPanel = new LeadPanel(c);
-        learnPanel = new LearnPanel(c);
 
         layout = (CardLayout) modePanel.getLayout();
-        modePanel.add(testPanel, testName);
+        modePanel.add(testPanel, learnName);
         modePanel.add(leadPanel,leadName );
-        modePanel.add(learnPanel, learnName);
         modePanel.setLayout(layout);
-        layout.show(modePanel, testName);
+        layout.show(modePanel, learnName);
     }
 
     /** This method is called from within the constructor to
@@ -71,7 +67,6 @@ public class ClientFrame extends javax.swing.JFrame implements CommandListener{
         buttongroup = new javax.swing.ButtonGroup();
         jScrollPane1 = new javax.swing.JScrollPane();
         infoArea = new javax.swing.JTextArea();
-        testbutton = new javax.swing.JRadioButton();
         learnbutton = new javax.swing.JRadioButton();
         leadbutton = new javax.swing.JRadioButton();
         modePanel = new javax.swing.JPanel();
@@ -86,16 +81,8 @@ public class ClientFrame extends javax.swing.JFrame implements CommandListener{
         infoArea.setRows(5);
         jScrollPane1.setViewportView(infoArea);
 
-        buttongroup.add(testbutton);
-        testbutton.setSelected(true);
-        testbutton.setText("Test");
-        testbutton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                testbuttonActionPerformed(evt);
-            }
-        });
-
         buttongroup.add(learnbutton);
+        learnbutton.setSelected(true);
         learnbutton.setText("Learn");
         learnbutton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -134,12 +121,10 @@ public class ClientFrame extends javax.swing.JFrame implements CommandListener{
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 667, Short.MAX_VALUE)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(testbutton)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(learnbutton)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(leadbutton)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 350, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 405, Short.MAX_VALUE)
                                 .addComponent(voicerecognition))))
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap(493, Short.MAX_VALUE)
@@ -151,10 +136,9 @@ public class ClientFrame extends javax.swing.JFrame implements CommandListener{
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(testbutton)
                     .addComponent(learnbutton)
-                    .addComponent(leadbutton)
-                    .addComponent(voicerecognition))
+                    .addComponent(voicerecognition)
+                    .addComponent(leadbutton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(tts)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -166,10 +150,6 @@ public class ClientFrame extends javax.swing.JFrame implements CommandListener{
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void testbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_testbuttonActionPerformed
-        layout.show(modePanel, testName);
-    }//GEN-LAST:event_testbuttonActionPerformed
 
     private void voicerecognitionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_voicerecognitionActionPerformed
         final String good = "Use Voice Recognition";
@@ -202,19 +182,19 @@ public class ClientFrame extends javax.swing.JFrame implements CommandListener{
     }//GEN-LAST:event_voicerecognitionActionPerformed
 
     private void sphinxWordDetected(String word) {
-        if (testbutton.isSelected()) {
+        if (learnbutton.isSelected()) {
             testPanel.sphinxWordDetected(word);
         }
     }
 
 
-    private void learnbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_learnbuttonActionPerformed
-        layout.show(modePanel, learnName);
-    }//GEN-LAST:event_learnbuttonActionPerformed
-
     private void leadbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_leadbuttonActionPerformed
         layout.show(modePanel, leadName);
     }//GEN-LAST:event_leadbuttonActionPerformed
+
+    private void learnbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_learnbuttonActionPerformed
+        layout.show(modePanel, learnName);
+}//GEN-LAST:event_learnbuttonActionPerformed
 
     public void logInfo(String info){
         infoArea.append(info + "\n" );
@@ -252,7 +232,6 @@ public class ClientFrame extends javax.swing.JFrame implements CommandListener{
     private javax.swing.JRadioButton leadbutton;
     private javax.swing.JRadioButton learnbutton;
     private javax.swing.JPanel modePanel;
-    private javax.swing.JRadioButton testbutton;
     private javax.swing.JCheckBox tts;
     private javax.swing.JCheckBox voicerecognition;
     // End of variables declaration//GEN-END:variables

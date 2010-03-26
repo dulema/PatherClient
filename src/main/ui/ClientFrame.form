@@ -35,12 +35,10 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="jScrollPane1" alignment="0" pref="667" max="32767" attributes="0"/>
                           <Group type="102" alignment="0" attributes="0">
-                              <Component id="testbutton" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
                               <Component id="learnbutton" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="leadbutton" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace pref="350" max="32767" attributes="0"/>
+                              <EmptySpace pref="405" max="32767" attributes="0"/>
                               <Component id="voicerecognition" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
@@ -59,10 +57,9 @@
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="testbutton" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="learnbutton" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="leadbutton" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="voicerecognition" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="leadbutton" alignment="3" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
               <Component id="tts" min="-2" max="-2" attributes="0"/>
@@ -92,23 +89,12 @@
         </Component>
       </SubComponents>
     </Container>
-    <Component class="javax.swing.JRadioButton" name="testbutton">
-      <Properties>
-        <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
-          <ComponentRef name="buttongroup"/>
-        </Property>
-        <Property name="selected" type="boolean" value="true"/>
-        <Property name="text" type="java.lang.String" value="Test"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="testbuttonActionPerformed"/>
-      </Events>
-    </Component>
     <Component class="javax.swing.JRadioButton" name="learnbutton">
       <Properties>
         <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
           <ComponentRef name="buttongroup"/>
         </Property>
+        <Property name="selected" type="boolean" value="true"/>
         <Property name="text" type="java.lang.String" value="Learn"/>
       </Properties>
       <Events>
