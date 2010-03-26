@@ -11,6 +11,16 @@
 
 package main;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+import main.daemon.Command;
 import main.daemon.commands.*;
 
 /**
@@ -49,6 +59,7 @@ public class TestPanel extends javax.swing.JPanel {
         forward = new javax.swing.JButton();
         stop = new javax.swing.JButton();
         reverse = new javax.swing.JButton();
+        learn = new javax.swing.JToggleButton();
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Face Direction"));
 
@@ -155,8 +166,15 @@ public class TestPanel extends javax.swing.JPanel {
                 .addComponent(stop)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(reverse)
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addContainerGap(31, Short.MAX_VALUE))
         );
+
+        learn.setText("Learn");
+        learn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                learnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -164,56 +182,93 @@ public class TestPanel extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(learn))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(15, Short.MAX_VALUE)
+                .addComponent(learn)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap(12, Short.MAX_VALUE))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void stopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stopActionPerformed
-        client.sendCommand(new StopCommand());
+        command(new StopCommand());
     }//GEN-LAST:event_stopActionPerformed
 
     private void forwardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_forwardActionPerformed
-        client.sendCommand(new ForwardCommand());
+        command(new ForwardCommand());
     }//GEN-LAST:event_forwardActionPerformed
 
     private void eastActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_eastActionPerformed
-       client.sendCommand(new TurnCommand(TurnCommand.EAST));
+       command(new TurnCommand(TurnCommand.EAST));
     }//GEN-LAST:event_eastActionPerformed
 
     private void westActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_westActionPerformed
-       client.sendCommand(new TurnCommand(TurnCommand.WEST));
+       command(new TurnCommand(TurnCommand.WEST));
     }//GEN-LAST:event_westActionPerformed
 
     private void reverseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reverseActionPerformed
-       client.sendCommand(new ReverseCommand());
+       command(new ReverseCommand());
     }//GEN-LAST:event_reverseActionPerformed
 
     private void northActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_northActionPerformed
-        client.sendCommand(new TurnCommand(TurnCommand.NORTH));
+        command(new TurnCommand(TurnCommand.NORTH));
     }//GEN-LAST:event_northActionPerformed
 
     private void southActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_southActionPerformed
-        client.sendCommand(new TurnCommand(TurnCommand.SOUTH));
+        command(new TurnCommand(TurnCommand.SOUTH));
     }//GEN-LAST:event_southActionPerformed
+    
+    boolean learning = false;
+    String start, end;
+    ArrayList<Command> commands = new ArrayList<Command>();
+    private void learnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_learnActionPerformed
+        if (learning) {
+            //Done learning time to save
+            URL pathFile = Client.class.getResource("");
+            savePath(new File(pathFile.getFile(), start + "to" + end + ".path"));
+            learn.setText("Click to start learning");
+            start = end = null;
+        }else{
+            //Start learning!
+            start = JOptionPane.showInputDialog("Starting Node?");
+            end = JOptionPane.showInputDialog("Ending Nde?");
+            commands.clear();
+            learning = true;
+            learn.setText("Learning...");
+        }
+    }//GEN-LAST:event_learnActionPerformed
 
+    private void savePath(File f){
+        try {
+            PrintWriter fileout = new PrintWriter(f);
+            for (Command command : commands) {
+                fileout.println(command.getFileCommand());
+            }
+            fileout.close();
+        } catch (FileNotFoundException ex) {
+            System.err.println("Can't write to file");
+        }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton east;
     private javax.swing.JButton forward;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JToggleButton learn;
     private javax.swing.JButton north;
     private javax.swing.JButton reverse;
     private javax.swing.JButton south;
@@ -240,5 +295,12 @@ public class TestPanel extends javax.swing.JPanel {
             System.err.println("Nothing to do here: " + word);
         }
     }
+
+   private void command(Command c){
+       if (learning) {
+          commands.add(c); 
+       }
+       client.sendCommand(c);
+   }
 
 }

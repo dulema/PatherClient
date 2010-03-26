@@ -7,6 +7,10 @@ public abstract class Command {
      */
     public abstract String getCommand();
     
+    public String getFileCommand(){
+        return getCommand();
+    }
+
     @Override
     public String toString(){
         return getCommand();
