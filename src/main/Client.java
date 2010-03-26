@@ -1,5 +1,7 @@
 package main;
 
+import main.ui.ClientFrame;
+import main.ui.ConnectionDialog;
 import javax.swing.JOptionPane;
 import main.daemon.Command;
 import main.daemon.Daemon;
@@ -19,7 +21,6 @@ public class Client {
             //Just see if the daemon is already running
             daemon = new Daemon();
         } catch (Exception ex) {
-            ex.printStackTrace();
             ConnectionDialog d;
             do{
                 d = new ConnectionDialog();

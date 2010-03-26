@@ -9,7 +9,9 @@
  * Created on Mar 22, 2010, 10:50:06 PM
  */
 
-package main;
+package main.ui;
+
+import main.Client;
 
 /**
  *
@@ -49,16 +51,16 @@ public class LearnPanel extends javax.swing.JPanel {
             .addGap(0, 400, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 154, Short.MAX_VALUE)
+                    .addGap(0, 158, Short.MAX_VALUE)
                     .addComponent(jLabel1)
-                    .addGap(0, 154, Short.MAX_VALUE)))
+                    .addGap(0, 159, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 300, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 142, Short.MAX_VALUE)
+                    .addGap(0, 143, Short.MAX_VALUE)
                     .addComponent(jLabel1)
                     .addGap(0, 143, Short.MAX_VALUE)))
         );

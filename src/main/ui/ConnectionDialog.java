@@ -9,7 +9,7 @@
  * Created on Mar 22, 2010, 9:00:52 PM
  */
 
-package main;
+package main.ui;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -43,7 +43,7 @@ public class ConnectionDialog extends javax.swing.JFrame {
         cancel = new javax.swing.JButton();
         connect = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Daemon Connection");
 
         hostLabel.setText("Host:");
@@ -113,7 +113,9 @@ public class ConnectionDialog extends javax.swing.JFrame {
     private void cancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelActionPerformed
         port = -1;
         address = "";
-        lock.notifyAll();
+        synchronized (lock){
+            lock.notifyAll();
+        }
         canceled = true;
         dispose();
     }//GEN-LAST:event_cancelActionPerformed

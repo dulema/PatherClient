@@ -9,9 +9,10 @@
  * Created on Mar 22, 2010, 4:39:43 PM
  */
 
-package main;
+package main.ui;
 
 import java.awt.CardLayout;
+import main.Client;
 import main.daemon.Command;
 import main.daemon.CommandListener;
 import main.sphinx.SphinxCommandThread;

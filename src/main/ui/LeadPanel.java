@@ -9,7 +9,9 @@
  * Created on Mar 23, 2010, 12:18:54 PM
  */
 
-package main;
+package main.ui;
+
+import main.Client;
 
 /**
  *
@@ -48,16 +50,16 @@ public class LeadPanel extends javax.swing.JPanel {
             .addGap(0, 400, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 166, Short.MAX_VALUE)
+                    .addGap(0, 169, Short.MAX_VALUE)
                     .addComponent(jLabel1)
-                    .addGap(0, 167, Short.MAX_VALUE)))
+                    .addGap(0, 170, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 300, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 142, Short.MAX_VALUE)
+                    .addGap(0, 143, Short.MAX_VALUE)
                     .addComponent(jLabel1)
                     .addGap(0, 143, Short.MAX_VALUE)))
         );

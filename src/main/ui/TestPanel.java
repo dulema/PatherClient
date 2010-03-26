@@ -9,7 +9,7 @@
  * Created on Mar 22, 2010, 10:45:23 PM
  */
 
-package main;
+package main.ui;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -20,6 +20,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
+import main.Client;
 import main.daemon.Command;
 import main.daemon.commands.*;
 
