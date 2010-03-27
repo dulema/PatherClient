@@ -2,3 +2,51 @@
 2010-03-27 12:10:32,811 - pather-daemon - INFO - Command Sent: PW,0,0
 2010-03-27 12:10:32,811 - pather-daemon - INFO - Command Sent: PW,1,0
 2010-03-27 12:10:32,812 - pather-daemon - INFO - Listening to port 21567 for clients.
+2010-03-27 13:09:33,521 - pather-daemon - INFO - ERROR: port /dev/ttyUSB0 could not be opened, defaulting to -X mode
+2010-03-27 13:09:33,521 - pather-daemon - INFO - Command Sent: PW,0,0
+2010-03-27 13:09:33,521 - pather-daemon - INFO - Command Sent: PW,1,0
+2010-03-27 13:09:33,522 - pather-daemon - INFO - Listening to port 21567 for clients.
+2010-03-27 13:09:49,476 - pather-daemon - INFO - ERROR: port /dev/ttyUSB0 could not be opened, defaulting to -X mode
+2010-03-27 13:09:49,476 - pather-daemon - INFO - Command Sent: PW,0,0
+2010-03-27 13:09:49,476 - pather-daemon - INFO - Command Sent: PW,1,0
+2010-03-27 13:09:49,477 - pather-daemon - INFO - Listening to port 21567 for clients.
+2010-03-27 13:10:44,357 - pather-daemon - INFO - ERROR: port /dev/ttyUSB0 could not be opened, defaulting to -X mode
+2010-03-27 13:10:44,357 - pather-daemon - INFO - Command Sent: PW,0,0
+2010-03-27 13:10:44,357 - pather-daemon - INFO - Command Sent: PW,1,0
+2010-03-27 13:10:44,357 - pather-daemon - INFO - Listening to port 21567 for clients.
+2010-03-27 13:11:45,718 - pather-daemon - INFO - ERROR: port /dev/ttyUSB0 could not be opened, defaulting to -X mode
+2010-03-27 13:11:45,718 - pather-daemon - INFO - Command Sent: PW,0,0
+2010-03-27 13:11:45,718 - pather-daemon - INFO - Command Sent: PW,1,0
+2010-03-27 13:11:45,718 - pather-daemon - INFO - Listening to port 21567 for clients.
+2010-03-27 13:15:22,841 - pather-daemon - INFO - ERROR: port /dev/ttyUSB0 could not be opened, defaulting to -X mode
+2010-03-27 13:15:22,842 - pather-daemon - INFO - Command Sent: PW,0,0
+2010-03-27 13:15:22,842 - pather-daemon - INFO - Command Sent: PW,1,0
+2010-03-27 13:15:22,842 - pather-daemon - INFO - Listening to port 21567 for clients.
+2010-03-27 13:20:17,129 - pather-daemon - INFO - ERROR: port /dev/ttyUSB0 could not be opened, defaulting to -X mode
+2010-03-27 13:20:17,129 - pather-daemon - INFO - Command Sent: PW,0,0
+2010-03-27 13:20:17,130 - pather-daemon - INFO - Command Sent: PW,1,0
+2010-03-27 13:20:17,130 - pather-daemon - INFO - Listening to port 21567 for clients.
+2010-03-27 13:23:30,233 - pather-daemon - INFO - ERROR: port /dev/ttyUSB0 could not be opened, defaulting to -X mode
+2010-03-27 13:23:30,233 - pather-daemon - INFO - Command Sent: PW,0,0
+2010-03-27 13:23:30,233 - pather-daemon - INFO - Command Sent: PW,1,0
+2010-03-27 13:23:30,233 - pather-daemon - ERROR - Could not bind to port:21567
+2010-03-27 13:23:52,596 - pather-daemon - INFO - ERROR: port /dev/ttyUSB0 could not be opened, defaulting to -X mode
+2010-03-27 13:23:52,596 - pather-daemon - INFO - Command Sent: PW,0,0
+2010-03-27 13:23:52,596 - pather-daemon - INFO - Command Sent: PW,1,0
+2010-03-27 13:23:52,596 - pather-daemon - INFO - Listening to port 21567 for clients.
+2010-03-27 13:24:51,079 - pather-daemon - INFO - ERROR: port /dev/ttyUSB0 could not be opened, defaulting to -X mode
+2010-03-27 13:24:51,079 - pather-daemon - INFO - Command Sent: PW,0,0
+2010-03-27 13:24:51,079 - pather-daemon - INFO - Command Sent: PW,1,0
+2010-03-27 13:24:51,080 - pather-daemon - ERROR - Could not bind to port:21567
+2010-03-27 13:25:21,496 - pather-daemon - INFO - ERROR: port /dev/ttyUSB0 could not be opened, defaulting to -X mode
+2010-03-27 13:25:21,496 - pather-daemon - INFO - Command Sent: PW,0,0
+2010-03-27 13:25:21,496 - pather-daemon - INFO - Command Sent: PW,1,0
+2010-03-27 13:25:21,497 - pather-daemon - INFO - Listening to port 21567 for clients.
+2010-03-27 13:26:03,420 - pather-daemon - INFO - ERROR: port /dev/ttyUSB0 could not be opened, defaulting to -X mode
+2010-03-27 13:26:03,421 - pather-daemon - INFO - Command Sent: PW,0,0
+2010-03-27 13:26:03,421 - pather-daemon - INFO - Command Sent: PW,1,0
+2010-03-27 13:26:03,421 - pather-daemon - INFO - Listening to port 21567 for clients.
+2010-03-27 13:28:42,325 - pather-daemon - INFO - ERROR: port /dev/ttyUSB0 could not be opened, defaulting to -X mode
+2010-03-27 13:28:42,325 - pather-daemon - INFO - Command Sent: PW,0,0
+2010-03-27 13:28:42,326 - pather-daemon - INFO - Command Sent: PW,1,0
+2010-03-27 13:28:42,326 - pather-daemon - INFO - Listening to port 21567 for clients.
