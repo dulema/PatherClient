@@ -9,8 +9,6 @@ import java.io.PrintWriter;
 import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import main.Client;
 import main.daemon.Command;
 
@@ -53,6 +51,14 @@ public class PathGraph {
             node2node.put(s, startingFromS);
         }
         startingFromS.put(e, commands);
+    }
+
+    public List<Command> getPath(String start, String end){
+        return getPath(Name2ID(start), Name2ID(end));
+    }
+
+    public List<Command> getPath(int start, int end){
+        return null;
     }
 
     public String ID2Name(int id){
@@ -122,4 +128,5 @@ public class PathGraph {
             writer.close();
         }
     }
+
 }
