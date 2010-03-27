@@ -1,6 +1,6 @@
 <?xml version="1.0" ?>
 
-<project name="PatherClient" default="build" basedir=".">
+<project name="PatherClient" default="build-client" basedir=".">
 	
         <path id="lib.path">
 	        <fileset dir=".">
@@ -12,11 +12,12 @@
 		<delete dir="build/" />
 	</target>
 
-	<target name="build">
+	<target name="build-client">
 		<mkdir dir="build"/>
-		<javac debug="true" debuglevel="lines,source" srcdir="src" destdir="build" classpathref="lib.path" />
-		<copy todir="build">
-		      <fileset dir="src" includes="**/*.xml,**/*.gram" />
+		<mkdir dir="build/client"/>
+		<javac debug="true" debuglevel="lines,source" srcdir="src/client" destdir="build/client" classpathref="lib.path" />
+		<copy todir="build/client">
+		    <fileset dir="src/client" includes="**/*.xml,**/*.gram" />
 		</copy>
 	</target>
 

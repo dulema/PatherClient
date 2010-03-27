@@ -1,0 +1,4 @@
+2010-03-26 19:07:13,261 - pather-daemon - INFO - ERROR: port /dev/ttyUSB0 could not be opened, defaulting to -X mode
+2010-03-26 19:07:13,261 - pather-daemon - INFO - Command Sent: PW,0,0
+2010-03-26 19:07:13,261 - pather-daemon - INFO - Command Sent: PW,1,0
+2010-03-26 19:07:13,262 - pather-daemon - INFO - Listening to port 21567 for clients.
