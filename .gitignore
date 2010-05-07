@@ -2,3 +2,4 @@ build/*
 client-bin/*
 **/ignorethis
 **.swp
+.settings/*
