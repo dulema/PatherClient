@@ -2,11 +2,11 @@ package main.daemon.commands;
 
 import main.daemon.Command;
 
-public class ReverseCommand extends Command{
+public class GoCommand extends Command{
 
     @Override
     public String getCommand() {
-        return "Reverse";
+        return "Go," + getID();
     }
 
 }

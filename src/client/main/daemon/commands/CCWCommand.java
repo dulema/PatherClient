@@ -2,11 +2,11 @@ package main.daemon.commands;
 
 import main.daemon.Command;
 
-public class ForwardCommand extends Command{
+public class CCWCommand extends Command{
 
     @Override
     public String getCommand() {
-        return "Forward";
+        return "CCW," + getID();
     }
 
 }

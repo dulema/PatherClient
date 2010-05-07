@@ -43,13 +43,8 @@ public class Daemon {
     }
 
     public void sendCommand(Command c){
+        System.out.println("Sending: " + c);
         socketwriter.println(c.getCommand());
-        for (CommandListener commandListener : listeners) {
-            commandListener.commandSent(c);
-        }
     }
 
-    public void addListener(CommandListener listener){
-        listeners.add(listener);
-    }
 }

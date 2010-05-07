@@ -1,3 +1,9 @@
 build/*
 client-bin/*
+<<<<<<< HEAD:.gitignore
 **.swp
+=======
+**/ignorethis
+**.swp
+.settings/*
+>>>>>>> clientdaemon:.gitignore

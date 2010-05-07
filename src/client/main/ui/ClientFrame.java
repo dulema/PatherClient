@@ -14,7 +14,6 @@ package main.ui;
 import java.awt.CardLayout;
 import main.Client;
 import main.daemon.Command;
-import main.daemon.CommandListener;
 import main.sphinx.SphinxCommandThread;
 import main.tts.TextToSpeech;
 
@@ -22,7 +21,7 @@ import main.tts.TextToSpeech;
  *
  * @author Sandro Badame <a href="mailto:s.badame@gmail.com">s.badame&amp;gmail.com</a>
  */
-public class ClientFrame extends javax.swing.JFrame implements CommandListener{
+public class ClientFrame extends javax.swing.JFrame{
 
     Client client;
     SphinxCommandThread sphinxthread;
@@ -41,7 +40,6 @@ public class ClientFrame extends javax.swing.JFrame implements CommandListener{
     /** Creates new form ClientFrame */
     public ClientFrame(Client c) {
         this.client = c;
-        client.getDaemon().addListener(this);
 
         initComponents();
 

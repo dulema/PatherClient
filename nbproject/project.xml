@@ -16,9 +16,9 @@
                     <encoding>UTF-8</encoding>
                 </source-folder>
                 <source-folder>
-                    <label>src</label>
+                    <label>src/client</label>
                     <type>java</type>
-                    <location>src</location>
+                    <location>src/client</location>
                     <encoding>UTF-8</encoding>
                 </source-folder>
             </folders>
@@ -39,14 +39,14 @@
             </ide-actions>
             <export>
                 <type>folder</type>
-                <location>bin</location>
+                <location>build/client</location>
                 <build-target>build</build-target>
             </export>
             <view>
                 <items>
                     <source-folder style="packages">
-                        <label>src</label>
-                        <location>src</location>
+                        <label>src/client</label>
+                        <location>src/client</location>
                     </source-folder>
                     <source-file>
                         <location>build.xml</location>
@@ -63,9 +63,9 @@
         </general-data>
         <java-data xmlns="http://www.netbeans.org/ns/freeform-project-java/1">
             <compilation-unit>
-                <package-root>src</package-root>
+                <package-root>src/client</package-root>
                 <classpath mode="compile">lib/jsapi-1.0-base.jar:lib/jsapi.jar:lib/sphinx4.jar:lib/WSJ_8gau_13dCep_16k_40mel_130Hz_6800Hz.jar</classpath>
-                <built-to>bin</built-to>
+                <built-to>build/client</built-to>
                 <source-level>1.5</source-level>
             </compilation-unit>
         </java-data>
