@@ -15,4 +15,8 @@ public class CancelCommand extends Command{
         return "Cancel," + commandToStop.getID();
     }
 
+    public String getStorableString() {
+        return getCommand();
+    }
+
 }

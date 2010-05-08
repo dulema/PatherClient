@@ -18,37 +18,32 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="learn" alignment="0" pref="208" max="32767" attributes="1"/>
-                  <Group type="103" alignment="0" groupAlignment="0" max="-2" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="left" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="right" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="go" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <Component id="stop" alignment="0" max="32767" attributes="1"/>
+              <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                  <Component id="learn" alignment="0" max="32767" attributes="1"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="left" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="controller" min="-2" pref="129" max="-2" attributes="1"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="right" min="-2" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace max="-2" attributes="0"/>
+              <EmptySpace pref="42" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" alignment="0" attributes="0">
+          <Group type="102" alignment="1" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Component id="learn" min="-2" max="-2" attributes="0"/>
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
-                  <Component id="go" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="left" alignment="3" min="-2" max="-2" attributes="0"/>
-                  <Component id="right" alignment="3" min="-2" max="-2" attributes="0"/>
+                  <Component id="left" alignment="3" pref="122" max="32767" attributes="0"/>
+                  <Component id="controller" alignment="3" pref="122" max="32767" attributes="1"/>
+                  <Component id="right" alignment="3" pref="122" max="32767" attributes="1"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="stop" min="-2" pref="91" max="-2" attributes="0"/>
-              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -56,19 +51,10 @@
   <SubComponents>
     <Component class="javax.swing.JToggleButton" name="learn">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Click to Start Learning"/>
+        <Property name="text" type="java.lang.String" value="Click to Start Teaching a New Path"/>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="learnActionPerformed"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JButton" name="go">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="GO"/>
-        <Property name="enabled" type="boolean" value="false"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="goActionPerformed"/>
       </Events>
     </Component>
     <Component class="javax.swing.JButton" name="right">
@@ -89,13 +75,13 @@
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="leftActionPerformed"/>
       </Events>
     </Component>
-    <Component class="javax.swing.JButton" name="stop">
+    <Component class="javax.swing.JButton" name="controller">
       <Properties>
-        <Property name="text" type="java.lang.String" value="STOP"/>
+        <Property name="text" type="java.lang.String" value="FORWARD"/>
         <Property name="enabled" type="boolean" value="false"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="stopActionPerformed"/>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="controllerActionPerformed"/>
       </Events>
     </Component>
   </SubComponents>

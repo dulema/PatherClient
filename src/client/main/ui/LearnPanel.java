@@ -15,13 +15,16 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import main.Client;
 import main.daemon.Command;
 import main.daemon.commands.CCWCommand;
 import main.daemon.commands.CWCommand;
 import main.daemon.commands.GoCommand;
 import main.daemon.commands.CancelCommand;
-import main.pathing.PathGraph;
+import main.daemon.commands.FaceCommand;
+import main.daemon.commands.MoveCommand;
 
 /**
  *
@@ -31,6 +34,8 @@ public class LearnPanel extends javax.swing.JPanel {
 
     private Client client;
     private Command commandBeingRun;
+
+    private int startOdo;
 
     /** Creates new form LearnPanel */
     public LearnPanel() {
@@ -52,23 +57,14 @@ public class LearnPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         learn = new javax.swing.JToggleButton();
-        go = new javax.swing.JButton();
         right = new javax.swing.JButton();
         left = new javax.swing.JButton();
-        stop = new javax.swing.JButton();
+        controller = new javax.swing.JButton();
 
-        learn.setText("Click to Start Learning");
+        learn.setText("Click to Start Teaching a New Path");
         learn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 learnActionPerformed(evt);
-            }
-        });
-
-        go.setText("GO");
-        go.setEnabled(false);
-        go.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                goActionPerformed(evt);
             }
         });
 
@@ -88,11 +84,11 @@ public class LearnPanel extends javax.swing.JPanel {
             }
         });
 
-        stop.setText("STOP");
-        stop.setEnabled(false);
-        stop.addActionListener(new java.awt.event.ActionListener() {
+        controller.setText("FORWARD");
+        controller.setEnabled(false);
+        controller.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                stopActionPerformed(evt);
+                controllerActionPerformed(evt);
             }
         });
 
@@ -102,121 +98,162 @@ public class LearnPanel extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(learn, javax.swing.GroupLayout.DEFAULT_SIZE, 208, Short.MAX_VALUE)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(layout.createSequentialGroup()
-                            .addComponent(left)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(right)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(go))
-                        .addComponent(stop, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap())
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addComponent(learn, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                        .addComponent(left)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(controller, javax.swing.GroupLayout.PREFERRED_SIZE, 129, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(right)))
+                .addContainerGap(42, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(learn)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(go)
-                    .addComponent(left)
-                    .addComponent(right))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(stop, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(left, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE)
+                    .addComponent(controller, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE)
+                    .addComponent(right, javax.swing.GroupLayout.DEFAULT_SIZE, 122, Short.MAX_VALUE))
+                .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void goActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_goActionPerformed
-       commandBeingRun = new GoCommand();
-       sendCommand(commandBeingRun);
-    }//GEN-LAST:event_goActionPerformed
-
     private void rightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rightActionPerformed
+        left.setEnabled(false);
+        right.setEnabled(false);
+        controller.setText("STOP");
         commandBeingRun = new CWCommand();
-       sendCommand(commandBeingRun);
+        sendCommand(commandBeingRun);
     }//GEN-LAST:event_rightActionPerformed
 
     private void leftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_leftActionPerformed
+       left.setEnabled(false);
+       right.setEnabled(false);
+       controller.setText("STOP");
        commandBeingRun = new CCWCommand();
        sendCommand(commandBeingRun);
     }//GEN-LAST:event_leftActionPerformed
     
-    boolean learning = false;
+    boolean currentlylearning = false;
     String start, end;
     ArrayList<Command> commands = new ArrayList<Command>();
     private void learnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_learnActionPerformed
-        if (learning) {
+        if (currentlylearning) {
             //Stops learning
             //Done learning time to save the graph
-            PathGraph.getPathGraph().setPath(start, end, new ArrayList(commands));
+            new Thread(new Runnable(){
+                public void run(){
+                    JFileChooser pathFileChooser = new JFileChooser();
+                    int response = pathFileChooser.showSaveDialog(LearnPanel.this);
+                    if (response == JFileChooser.APPROVE_OPTION) {
+                        File pathFile = pathFileChooser.getSelectedFile();
+                        PrintWriter printWriter;
+                        try {
+                            printWriter = new PrintWriter(pathFile);
+                            for (Command command : commands) {
+                                printWriter.println(command.getStorableString());
+                            }
+                            printWriter.flush();
+                            printWriter.close();
+                        } catch (FileNotFoundException ex) {
+                            JOptionPane.showMessageDialog(LearnPanel.this, "Couldn't write to the selected file", "Path wasn't saved", JOptionPane.ERROR_MESSAGE);
+                        }
+                    }
+
+                } 
+            }).start();
             learn.setText("Click to start learning");
             start = end = null;
 
-            //Start learning!
-            go.setEnabled(false);
+            //Stop learning!
             right.setEnabled(false);
             left.setEnabled(false);
-            stop.setEnabled(false);
+            controller.setEnabled(false);
 
         }else{
             //Start learning!
-            go.setEnabled(true);
             right.setEnabled(true);
             left.setEnabled(true);
-            stop.setEnabled(true);
+            controller.setEnabled(true);
 
             commands.clear();
-            learning = true;
+            currentlylearning = true;
             learn.setText("Learning...");
         }
     }//GEN-LAST:event_learnActionPerformed
 
-    private void stopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_stopActionPerformed
-        sendCommand(new CancelCommand(commandBeingRun));
-    }//GEN-LAST:event_stopActionPerformed
+    private void controllerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_controllerActionPerformed
+        if (controller.getText().equals("STOP")) {
+            //Cancel the command
+            sendCommand(new CancelCommand(commandBeingRun));
+            
+            //Enable the buttons again
+            left.setEnabled(true);
+            right.setEnabled(true);
 
-    private void savePath(File f){
-        try {
-            PrintWriter fileout = new PrintWriter(f);
-            for (Command command : commands) {
-                fileout.println(command.getFileCommand());
+            //Set the text of the controller button
+            controller.setText("FORWARD");
+
+            //Time to actually save the command that represents that movement
+            Command newcom = null;
+            if (commandBeingRun instanceof GoCommand) {
+                int distance = client.getDaemon().getOdometerCount() - startOdo;
+                newcom = new MoveCommand(distance);
+            }else if (commandBeingRun instanceof CCWCommand || commandBeingRun instanceof CWCommand){
+                newcom = new FaceCommand(client.getDaemon().getHeading());
+            }else{
+                System.err.println("Rouge command: " + commandBeingRun);
             }
-            fileout.close();
-        } catch (FileNotFoundException ex) {
-            System.err.println("Can't write to file");
+            if (newcom != null) {
+                commands.add(newcom);
+            }
+        }else if (controller.getText().equals("FORWARD")){
+            //Remember how far we are right now so that we know how far we've traveled
+            startOdo = client.getDaemon().getOdometerCount();
+            //Send the move forward command
+            sendCommand(new GoCommand());
+
+            //Disable the other buttons
+            left.setEnabled(false);
+            right.setEnabled(false);
+
+            //Set the text of the controller button
+            controller.setText("STOP");
+        }else{
+            throw new RuntimeException("Controller has text: " + controller.getText());
         }
-    }
+    }//GEN-LAST:event_controllerActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton go;
+    private javax.swing.JButton controller;
     private javax.swing.JToggleButton learn;
     private javax.swing.JButton left;
     private javax.swing.JButton right;
-    private javax.swing.JButton stop;
     // End of variables declaration//GEN-END:variables
 
     void sphinxWordDetected(String word) {
-        if (word.toLowerCase().equals("go")) {
-            goActionPerformed(null);
+        if (word.toLowerCase().equals("forward") || word.toLowerCase().equals("go")) {
+            if (controller.getText().equals("FORWARD")) {
+                controllerActionPerformed(null);        
+            }
         }else if (word.toLowerCase().equals("left")) {
             leftActionPerformed(null);
         }else if (word.toLowerCase().equals("right")){
             rightActionPerformed(null);
         }else if (word.toLowerCase().equals("stop")){
-            stopActionPerformed(null);
+            if (controller.getText().equals("STOP")) {
+                controllerActionPerformed(null);
+            }
         }else{
             System.err.println("Nothing to do here: " + word);
         }
     }
 
    private void sendCommand(Command c){
-       if (learning) {
-          commands.add(c); 
-       }
        client.sendCommand(c);
    }
 

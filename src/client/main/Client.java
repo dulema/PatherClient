@@ -23,44 +23,23 @@ public class Client {
         try {
             //See if the daemon is already running
             daemon = new Daemon();
-        } catch (Exception ex) {
-            //Try to start the daemon our selves
-            String basedir = Client.class.getResource("").getFile();
-            File filebase = new File(new File(basedir).getParentFile().getParentFile(), "daemon");
-            System.out.println(filebase);
-            try {
-                Process p = Runtime.getRuntime().exec(new String[]{"/bin/bash", "daemon-starter.sh"},
-                                          new String[]{},
-                                          filebase);
-                try {
-                    Thread.sleep(5000);
-                } catch (InterruptedException ex1) {
-                }
-                daemon = new Daemon();
-            } catch (IOException pe){
-                pe.printStackTrace();
-                ConnectionDialog d;
-                do{
-                    d = new ConnectionDialog();
-                    if (d.showDialog() == false) {
-                        System.err.println("User canceled");
-                        System.exit(0);
-                    }
-                }while(d.getPort() == -1 || d.getAddress().isEmpty()); //Keep trying until we get it
-
-                try {
-                    daemon = new Daemon(d.getAddress(), d.getPort());
-                } catch (Exception ce) {
-                    JOptionPane.showMessageDialog(null, "Couldn't connect to daemon");
+        } catch (IOException ex) {
+            ConnectionDialog d;
+            do{
+                d = new ConnectionDialog();
+                if (d.showDialog() == false) {
+                    System.err.println("User canceled");
                     System.exit(0);
                 }
+            }while(d.getPort() == -1 || d.getAddress().isEmpty()); //Keep trying until we get it
 
+            try {
+                daemon = new Daemon(d.getAddress(), d.getPort());
+            } catch (Exception ce) {
+                JOptionPane.showMessageDialog(null, "Couldn't connect to daemon");
+                System.exit(0);
             }
-
-
-            
         }
-
         frame = new ClientFrame(this);
     }
 

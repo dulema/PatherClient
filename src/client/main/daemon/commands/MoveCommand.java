@@ -12,7 +12,12 @@ public class MoveCommand extends Command{
 
     @Override
     public String getCommand() {
-        return "Move,"+ticks+","+getID();
+        return getStorableString()+","+getID();
+    }
+
+    @Override
+    public String getStorableString() {
+        return "Move,"+ticks;
     }
 
 }

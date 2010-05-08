@@ -9,4 +9,8 @@ public class CWCommand extends Command{
         return "CW," + getID();
     }
 
+    public String getStorableString() {
+        return getCommand();
+    }
+
 }

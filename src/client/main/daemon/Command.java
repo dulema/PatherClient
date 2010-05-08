@@ -10,14 +10,14 @@ public abstract class Command {
         id_count++;
     }
 
+    public String getStorableString(){
+        return getCommand();
+    }
+
     /**
      * @return string to feed to the UBW32
      */
     public abstract String getCommand();
-    
-    public String getFileCommand(){
-        return getCommand();
-    }
 
     @Override
     public String toString(){

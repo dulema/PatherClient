@@ -161,7 +161,6 @@ public class ConnectionDialog extends javax.swing.JFrame {
     public boolean showDialog(){
         setVisible(true);
         setLocationRelativeTo(null);
-
         synchronized(lock){
             try {
                 lock.wait();
