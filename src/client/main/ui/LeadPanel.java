@@ -15,16 +15,15 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.DefaultListModel;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import main.Client;
 import main.daemon.Command;
 import main.daemon.Daemon.RESULT;
-import main.daemon.CommandListener;
 import main.daemon.UnknownCommandException;
+import main.daemon.commands.FaceCommand;
+import main.daemon.commands.MoveCommand;
 
 /**
  *
@@ -59,6 +58,7 @@ public class LeadPanel extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         commandsList = new javax.swing.JList();
         runpath = new javax.swing.JButton();
+        reverse = new javax.swing.JButton();
 
         loadedFile.setText("No File Currently Loaded");
         loadedFile.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -98,6 +98,13 @@ public class LeadPanel extends javax.swing.JPanel {
             }
         });
 
+        reverse.setText("Reverse Path");
+        reverse.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                reverseActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -105,7 +112,10 @@ public class LeadPanel extends javax.swing.JPanel {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 356, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(reverse))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(loadedFile, javax.swing.GroupLayout.DEFAULT_SIZE, 378, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -123,7 +133,9 @@ public class LeadPanel extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(runpath)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 215, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(reverse)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 215, Short.MAX_VALUE))
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -142,6 +154,7 @@ public class LeadPanel extends javax.swing.JPanel {
                     ClientFrame.lastDirectory = pathFile.getParentFile();
                     try{
                         BufferedReader pathReader = new BufferedReader(new FileReader(pathFile));
+                        pathCommands.clear();
                         String line;
                         while( (line = pathReader.readLine())  != null){
                             try {
@@ -155,6 +168,7 @@ public class LeadPanel extends javax.swing.JPanel {
                                 break;
                             }
                         }
+                        commandsList.repaint();
                         runpath.setEnabled(true);
                         loadedFile.setText(pathFile.getAbsolutePath());
                         pathReader.close();
@@ -183,10 +197,12 @@ public class LeadPanel extends javax.swing.JPanel {
         String stopPath = "Stop Path";
         if (runpath.getText().equals(runPath)) {
             //start going through the commands
+            reverse.setEnabled(false);
             pathExecutor = new PathExecutor(pathCommands);
             pathExecutor.start();
             runpath.setText(stopPath);
         }else if (runpath.getText().equals(stopPath)){
+            reverse.setEnabled(true);
             pathExecutor.cancel();
             pathCommands.clear();
             runpath.setText(runPath);
@@ -196,12 +212,36 @@ public class LeadPanel extends javax.swing.JPanel {
 
     }//GEN-LAST:event_runpathActionPerformed
 
+    private void reverseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_reverseActionPerformed
+        DefaultListModel reverseList = new DefaultListModel();
+
+        for(int i = pathCommands.getSize() - 2; i >= 0;  i -= 2){
+            FaceCommand fc = (FaceCommand) pathCommands.get(i);
+            MoveCommand mc = (MoveCommand) pathCommands.get(i+1);
+
+            System.out.println("======");
+            System.out.println(fc);
+            System.out.println(mc);
+
+            float invertHeading = fc.getHeading() + 180;
+            if (invertHeading >= 360) { invertHeading -= 360; }
+
+            reverseList.addElement(new FaceCommand(invertHeading));
+            reverseList.addElement(mc);
+        }
+
+        commandsList.setModel(reverseList);
+        commandsList.repaint();
+        pathCommands = reverseList;
+    }//GEN-LAST:event_reverseActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JList commandsList;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JButton loadPath;
     private javax.swing.JTextField loadedFile;
+    private javax.swing.JButton reverse;
     private javax.swing.JButton runpath;
     // End of variables declaration//GEN-END:variables
 

@@ -29,4 +29,8 @@ public class FaceCommand extends Command{
         return "Rotate to face " + String.format("%.2f", heading) + "° from North";
     }
 
+    public float getHeading() {
+        return heading;
+    }
+
 }

@@ -33,7 +33,7 @@ import main.daemon.commands.MoveCommand;
 public class LearnPanel extends javax.swing.JPanel {
 
     private Client client;
-    private Command commandBeingRun;
+    private Command currentCommand;
 
     //Where the command first started
     private int startOdo;
@@ -134,8 +134,8 @@ public class LearnPanel extends javax.swing.JPanel {
         right.setEnabled(false);
 
         controller.setText("STOP");
-        commandBeingRun = new CWCommand();
-        sendCommand(commandBeingRun);
+        currentCommand = new CWCommand();
+        sendCommand(currentCommand);
     }//GEN-LAST:event_rightActionPerformed
 
     private void leftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_leftActionPerformed
@@ -143,15 +143,15 @@ public class LearnPanel extends javax.swing.JPanel {
        right.setEnabled(false);
 
        controller.setText("STOP");
-       commandBeingRun = new CCWCommand();
-       sendCommand(commandBeingRun);
+       currentCommand = new CCWCommand();
+       sendCommand(currentCommand);
     }//GEN-LAST:event_leftActionPerformed
     
     boolean currentlylearning = false;
     String start, end;
     ArrayList<Command> commands = new ArrayList<Command>();
     private void learnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_learnActionPerformed
-        if (commandBeingRun != null) {
+        if (currentCommand != null) {
             JOptionPane.showMessageDialog(this, "Pather must first be stopped before attemping to save the path", "Stop Pather", JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -205,7 +205,7 @@ public class LearnPanel extends javax.swing.JPanel {
     private void controllerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_controllerActionPerformed
         if (controller.getText().equals("STOP")) {
             //Cancel the command
-            sendCommand(new CancelCommand(commandBeingRun));
+            sendCommand(new CancelCommand(currentCommand));
             
             //Enable the buttons again
             left.setEnabled(true);
@@ -214,27 +214,24 @@ public class LearnPanel extends javax.swing.JPanel {
             //Set the text of the controller button
             controller.setText("FORWARD");
 
-            //Time to actually save the command that represents that movement
-            Command newcom = null;
-            if (commandBeingRun instanceof GoCommand) {
+            //If we've stopped moving forward record the distance that was moved
+            if (currentCommand instanceof GoCommand) {
                 int distance = client.getDaemon().getOdometerCount() - startOdo;
-                newcom = new MoveCommand(distance);
-            }else if (commandBeingRun instanceof CCWCommand || commandBeingRun instanceof CWCommand){
-                newcom = new FaceCommand(client.getDaemon().getHeading());
-            }else{
-                System.err.println("Rouge command: " + commandBeingRun);
+                commands.add(new MoveCommand(distance));
             }
-            if (newcom != null) {
-                commands.add(newcom);
-            }
-            commandBeingRun = null;
 
+            currentCommand = null;
         }else if (controller.getText().equals("FORWARD")){
+
+            //Remember the the current heading
+            commands.add(new FaceCommand(client.getDaemon().getHeading()));
+
             //Remember how far we are right now so that we know how far we've traveled
             startOdo = client.getDaemon().getOdometerCount();
+
             //Send the move forward command
-            commandBeingRun = new GoCommand();
-            sendCommand(commandBeingRun);
+            currentCommand = new GoCommand();
+            sendCommand(currentCommand);
 
             //Disable the other buttons
             left.setEnabled(false);
@@ -274,6 +271,7 @@ public class LearnPanel extends javax.swing.JPanel {
 
    private void sendCommand(Command c){
        client.sendCommand(c);
+       client.getFrame().logInfo(c.toString());
    }
 
 }
