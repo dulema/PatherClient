@@ -56,6 +56,10 @@ public class Client {
         getDaemon().sendCommand(c);
     }
 
+    public ClientFrame getFrame(){
+        return frame;
+    }
+
     /**
      * @param args the command line arguments
      */

@@ -15,4 +15,9 @@ public class CCWCommand extends Command{
         return "CCW," + getID();
     }
 
+    @Override
+    public String toString(){
+        return "Rotate Counter Clock Wise until a Stop command is issued";
+    }
+
 }

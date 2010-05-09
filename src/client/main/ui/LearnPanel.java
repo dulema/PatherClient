@@ -35,7 +35,14 @@ public class LearnPanel extends javax.swing.JPanel {
     private Client client;
     private Command commandBeingRun;
 
+    //Where the command first started
     private int startOdo;
+
+    //First Learning button text
+    private String toLearnText = "Click here to start recording a path.";
+    private String toStopLearning = "Click here to stop recording the path and save.";
+
+    //Last Directory
 
     /** Creates new form LearnPanel */
     public LearnPanel() {
@@ -61,7 +68,7 @@ public class LearnPanel extends javax.swing.JPanel {
         left = new javax.swing.JButton();
         controller = new javax.swing.JButton();
 
-        learn.setText("Click to Start Teaching a New Path");
+        learn.setText(toLearnText);
         learn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 learnActionPerformed(evt);
@@ -125,6 +132,7 @@ public class LearnPanel extends javax.swing.JPanel {
     private void rightActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rightActionPerformed
         left.setEnabled(false);
         right.setEnabled(false);
+
         controller.setText("STOP");
         commandBeingRun = new CWCommand();
         sendCommand(commandBeingRun);
@@ -133,6 +141,7 @@ public class LearnPanel extends javax.swing.JPanel {
     private void leftActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_leftActionPerformed
        left.setEnabled(false);
        right.setEnabled(false);
+
        controller.setText("STOP");
        commandBeingRun = new CCWCommand();
        sendCommand(commandBeingRun);
@@ -142,12 +151,16 @@ public class LearnPanel extends javax.swing.JPanel {
     String start, end;
     ArrayList<Command> commands = new ArrayList<Command>();
     private void learnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_learnActionPerformed
+        if (commandBeingRun != null) {
+            JOptionPane.showMessageDialog(this, "Pather must first be stopped before attemping to save the path", "Stop Pather", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
         if (currentlylearning) {
             //Stops learning
             //Done learning time to save the graph
             new Thread(new Runnable(){
                 public void run(){
-                    JFileChooser pathFileChooser = new JFileChooser();
+                    JFileChooser pathFileChooser = new JFileChooser(ClientFrame.lastDirectory);
                     int response = pathFileChooser.showSaveDialog(LearnPanel.this);
                     if (response == JFileChooser.APPROVE_OPTION) {
                         File pathFile = pathFileChooser.getSelectedFile();
@@ -159,6 +172,8 @@ public class LearnPanel extends javax.swing.JPanel {
                             }
                             printWriter.flush();
                             printWriter.close();
+                            ClientFrame.lastDirectory = pathFile.getParentFile();
+                            client.getFrame().logInfo("Path: \"" + pathFile.getAbsolutePath() + "\" has been saved");
                         } catch (FileNotFoundException ex) {
                             JOptionPane.showMessageDialog(LearnPanel.this, "Couldn't write to the selected file", "Path wasn't saved", JOptionPane.ERROR_MESSAGE);
                         }
@@ -166,7 +181,7 @@ public class LearnPanel extends javax.swing.JPanel {
 
                 } 
             }).start();
-            learn.setText("Click to start learning");
+            learn.setText(toLearnText);
             start = end = null;
 
             //Stop learning!
@@ -181,9 +196,10 @@ public class LearnPanel extends javax.swing.JPanel {
             controller.setEnabled(true);
 
             commands.clear();
-            currentlylearning = true;
-            learn.setText("Learning...");
+
+            learn.setText(toStopLearning);
         }
+        currentlylearning = !currentlylearning;
     }//GEN-LAST:event_learnActionPerformed
 
     private void controllerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_controllerActionPerformed
@@ -211,11 +227,14 @@ public class LearnPanel extends javax.swing.JPanel {
             if (newcom != null) {
                 commands.add(newcom);
             }
+            commandBeingRun = null;
+
         }else if (controller.getText().equals("FORWARD")){
             //Remember how far we are right now so that we know how far we've traveled
             startOdo = client.getDaemon().getOdometerCount();
             //Send the move forward command
-            sendCommand(new GoCommand());
+            commandBeingRun = new GoCommand();
+            sendCommand(commandBeingRun);
 
             //Disable the other buttons
             left.setEnabled(false);

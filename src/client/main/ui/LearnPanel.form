@@ -51,7 +51,9 @@
   <SubComponents>
     <Component class="javax.swing.JToggleButton" name="learn">
       <Properties>
-        <Property name="text" type="java.lang.String" value="Click to Start Teaching a New Path"/>
+        <Property name="text" type="java.lang.String" editor="org.netbeans.modules.form.RADConnectionPropertyEditor">
+          <Connection code="toLearnText" type="code"/>
+        </Property>
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="learnActionPerformed"/>

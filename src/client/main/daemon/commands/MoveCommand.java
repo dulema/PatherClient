@@ -20,4 +20,9 @@ public class MoveCommand extends Command{
         return "Move,"+ticks;
     }
 
+    @Override
+    public String toString(){
+        return "Move forward " + ticks + " ticks";
+    }
+
 }

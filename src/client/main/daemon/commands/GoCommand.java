@@ -14,4 +14,9 @@ public class GoCommand extends Command{
         return "Go," + getID();
     }
 
+    @Override
+    public String toString(){
+        return "Go forward until a Stop command is issued";
+    }
+
 }

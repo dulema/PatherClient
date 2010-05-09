@@ -6,8 +6,8 @@ public class CancelCommand extends Command{
 
     Command commandToStop = null;
 
-    public CancelCommand(Command c){
-        commandToStop = c;
+    public CancelCommand(Command commandToStop){
+        this.commandToStop = commandToStop;
     }
 
     @Override
@@ -15,6 +15,7 @@ public class CancelCommand extends Command{
         return "Cancel," + commandToStop.getID();
     }
 
+    @Override
     public String getStorableString() {
         return getCommand();
     }

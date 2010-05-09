@@ -24,4 +24,9 @@ public class FaceCommand extends Command{
         return "Face,"+String.format("%.2f", heading);
     }
 
+    @Override
+    public String toString(){
+        return "Rotate to face " + String.format("%.2f", heading) + "° from North";
+    }
+
 }

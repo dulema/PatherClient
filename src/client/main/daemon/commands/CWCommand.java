@@ -9,8 +9,14 @@ public class CWCommand extends Command{
         return "CW," + getID();
     }
 
+    @Override
     public String getStorableString() {
         return getCommand();
+    }
+
+    @Override
+    public String toString(){
+        return "Rotate Clockwise until a Stop Command is issued";
     }
 
 }
