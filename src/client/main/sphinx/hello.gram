@@ -6,4 +6,4 @@
 
 grammar hello;
 
-public <greet> = (Forward | Reverse | East | West | North | South | Stop );
+public <greet> = (Forward | Reverse | Left | Right | Stop );
